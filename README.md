@@ -4,6 +4,14 @@ A step-powered reality-dating show game. You and a partner co-produce a villa fu
 
 This repo is the playable web demo.
 
+## Demo
+
+`/demo` is the same game set up for showing people: its own save, time you can click through (next part of the day, next day, tonight's episode), buttons for a bombshell, a recoupling and the finale, and a picker to preview any season's features. Rebuild it after changing `index.html`:
+
+```
+python3 tools/build_demo.py
+```
+
 ## Run it
 
 It's a static site with no build step.
