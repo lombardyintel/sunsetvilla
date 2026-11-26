@@ -2711,7 +2711,7 @@ markers=function(){let list=Object.keys(LOC).map(k=>hotAt(k)).filter(h=>h&&HOTIC
  if(ST.sel&&pos[ST.sel]&&!pos[ST.sel].hidden){const v=pos[ST.sel],n=nm(ST.sel),w=n.length*7+18;s+=`<g transform="translate(${v.x} ${v.y+16})"><rect x="${-w/2}" y="-10" width="${w}" height="20" rx="10" fill="#241A2E"/><text y="4" text-anchor="middle" font-family="Manrope, sans-serif" font-weight="700" font-size="11" fill="#FFF1E6">${n}</text></g>`}return s};
 /* ---------- sound and haptics ---------- */
 const AU={ctx:null,master:null,amb:null,ep:null,next:0};if(CAR.sound===undefined)CAR.sound=true;
-const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+const buzz=p=>{try{navigator.vibrate&&(!navigator.userActivation||navigator.userActivation.hasBeenActive)&&navigator.vibrate(p)}catch(e){}};
 function auInit(){if(AU.ctx||!CAR.sound)return;try{AU.ctx=new (window.AudioContext||window.webkitAudioContext)();AU.master=AU.ctx.createGain();AU.master.gain.value=.55;AU.master.connect(AU.ctx.destination);startAmb()}catch(e){AU.ctx=null}}
 document.addEventListener('pointerdown',auInit,{once:false});
 function tone(f,d,type='sine',g=.12,when=0,f2){if(!AU.ctx||!CAR.sound)return;const c=AU.ctx,t=c.currentTime+when,o=c.createOscillator(),gn=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);if(f2)o.frequency.exponentialRampToValueAtTime(f2,t+d);gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(g,t+.015);gn.gain.exponentialRampToValueAtTime(.0008,t+d);o.connect(gn);gn.connect(AU.master);o.start(t);o.stop(t+d+.05)}
